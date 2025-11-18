@@ -5,7 +5,7 @@ const genAI= new GoogleGenerativeAI(process.env.GEMINI_APIKEY)
 
 const model=genAI.getGenerativeModel({
     model:"gemini-2.0-flash",
-    systemInstruction:"You are a expert in code reviewing and you will be given a code and you have to tell about the errors or suggestions in the code in short."
+    systemInstruction:"You are a expert in code reviewing and you will be given a code and you have to tell about the errors or suggestions in the code in short.If a user has not provided Code throw an error"
 });
 
 
