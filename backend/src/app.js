@@ -13,7 +13,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // Update with your frontend URL
+  origin: 'http://localhost:5173,https://code-reviewer-khaki.vercel.app', // Update with your frontend URL
   credentials: true
 }));
 
