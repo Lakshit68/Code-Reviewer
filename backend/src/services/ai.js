@@ -1,16 +1,35 @@
 
-const {GoogleGenerativeAI}=require("@google/generative-ai");
+const Groq = require("groq-sdk");
 
-const genAI= new GoogleGenerativeAI(process.env.GEMINI_APIKEY)
-
-const model=genAI.getGenerativeModel({
-    model:"gemini-2.0-flash",
-    systemInstruction:"You are a expert in code reviewing and you will be given a code and you have to first greet the user with thanks for providing the code and then tell about the errors(if any),code explanation(in short) and then suggestions or improvements in the code in short.If a user has not provided Code throw an error."
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
 });
 
+async function generateContent(prompt) {
+  try {
+    const completion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content: "You are a code review expert. Greet user, identify errors, explain code briefly, and suggest improvements. Keep responses concise."
+        },
+        {
+          role: "user",
+          content: prompt
+        }
+      ],
+      model: "llama-3.1-8b-instant",
+      temperature: 0.5,
+      max_tokens: 500,
+      top_p: 1,
+      stream: false,
+    });
 
-async function generateContent(prompt){
-    const result=await model.generateContent(prompt)
-    return result.response.text();
+    return completion.choices[0].message.content;
+  } catch (error) {
+    console.error("Groq API Error:", error);
+    throw new Error("Failed to generate AI response");
+  }
 }
-module.exports=generateContent;
+
+module.exports = generateContent;

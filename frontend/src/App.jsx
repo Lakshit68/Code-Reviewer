@@ -34,10 +34,16 @@ function App() {
     document.body.classList.toggle('light-mode', !darkMode);
   }, [darkMode]);
 
-  async function reviewCode(codeToReview = code) {
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+async function reviewCode(codeToReview = code) {
     try {
       setIsLoading(true);
-      const response = await axios.post('https://code-reviewer-sovf.onrender.com/ai/get-review', { 
+
+  
+
+      const response = await axios.post(`${API_BASE_URL}/ai/get-review`, { 
+
         code: codeToReview 
       });
       setReview(response.data);

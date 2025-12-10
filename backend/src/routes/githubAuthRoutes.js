@@ -9,7 +9,7 @@ const { getAccessToken, getAuthenticatedUser, getUserRepositories, getRepository
 router.get('/auth/github', (req, res) => {
   const params = new URLSearchParams({
     client_id: process.env.GITHUB_CLIENT_ID,
-    redirect_uri: process.env.GITHUB_CALLBACK_URL,
+    redirect_uri: process.env.GITHUB_CALLBACK_URL || 'http://localhost:3000/api/auth/github/callback',
     scope: 'repo,user',
     allow_signup: 'true'
   });
