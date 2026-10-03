@@ -18,7 +18,7 @@ async function generateContent(prompt) {
           content: prompt
         }
       ],
-      model: "
+     model: "openai/gpt-oss-20b",
 const Groq = require("groq-sdk");
 
 const groq = new Groq({
